@@ -354,30 +354,52 @@ FROM users
 
  /*3.Написать скрипт, отмечающий несовершеннолетних пользователей как неактивных (поле is_active = false). Предварительно добавить такое поле в таблицу profiles со значением по умолчанию = true (или 1)*/
 
-ALTER TABLE profiles ADD is_active BIT DEFAULT false NULL;
+-- добавим флаг is_active 
+ALTER TABLE vk.profiles 
+ADD COLUMN is_active BIT DEFAULT 1;
 
-/* Написать скрипт, удаляющий сообщения «из будущего» (дата больше сегодняшней)*/
+-- сделать невовершеннолетних неактивными
 UPDATE profiles
-SET is_active = 1
-WHERE YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) < 18
-;
--- ������� � ��������� ������������
-ALTER TABLE profiles ADD age bigint(5);
--- ������� � ������� age ������� �������������
-UPDATE profiles
-SET age = YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5))
-;
+SET is_active = 0
+WHERE (birthday + INTERVAL 18 YEAR) > NOW();
+
+-- проверим не активных
+select *
+from profiles
+where is_active = 0
+order by birthday;
+
+-- проверим активных
+select *
+from profiles
+where is_active = 1
+order by birthday;
 
 
-/*4.  Написать название темы курсового проекта (в комментарии) */ 
+/* Написать скрипт, удаляющий сообщения «из будущего» (дата позже сегодняшней) */
 
---�������� ��������� � id 4 ���� �� ��������
-UPDATE messages
-	SET created_at='2222-11-24 04:06:29'
-	WHERE id = 4;
+-- добавим флаг is_deleted 
+ALTER TABLE messages 
+ADD COLUMN is_deleted BIT DEFAULT 0;
 
--- ������ ��������� �� ��������
-DELETE FROM messages
-WHERE created_at > now()
-;
+-- отметим пару сообщений неправильной датой
+update messages
+set created_at = now() + interval 1 year
+limit 2;
+
+-- отметим, как удаленные, сообщения "из будущего"
+update messages
+set is_deleted = 1
+where created_at > NOW();
+
+/*
+-- физически удалим сообщения "из будущего"
+delete from messages
+where created_at > NOW()
+*/
+
+-- проверим
+select *
+from messages
+order by created_at desc;
 
