@@ -108,7 +108,7 @@
 
 
 
-## [Урок 12. Курсовой проект]([https://github.com/ennsyuliya/MySQL/blob/hw/hw-8.sql](https://github.com/ennsyuliya/MySQL/blob/hw/hw-12.sql "more info")
+## [Урок 12. Курсовой проект](https://github.com/ennsyuliya/MySQL/blob/hw/hw-12.sql "more info")
 
 
 1. Общее текстовое описание БД и решаемых ею задач: База данных HH.ru - крупнейшая российская компания интернет-рекрутмента,  развивающая бизнес в России, Белоруссии, Казахстане. 
