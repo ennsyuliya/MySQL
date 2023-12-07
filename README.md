@@ -8,7 +8,7 @@
 
 
 
-## [Урок 2.  “Управление БД](https://github.com/ennsyuliya/MySQL/blob/hw/hw_2.sql "more info")
+## [Урок 2.  Управление БД](https://github.com/ennsyuliya/MySQL/blob/hw/hw_2.sql "more info")
 
 
 1. Установите СУБД MySQL. Создайте в домашней директории файл .my.cnf, задав в нем логин и пароль, который указывался при установке.
